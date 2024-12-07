@@ -8,6 +8,9 @@ import config from 'config'
 import jwt from 'jsonwebtoken'
 import { config } from 'config';
 import { config } from 'dotenv';
+import process from 'process';
+ 
+
 config();
 
 
@@ -305,7 +308,7 @@ describe('/rest/2fa/setup', () => {
       })
       .expect('status', 401)
   })
-
+const secret = process.env.TEST_SECRET || 'test_secret_123'
   it('POST should fail if the inital token is incorrect', async () => {
     const email = 'fooooo3@bar.com'
     const password = '123456'
