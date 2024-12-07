@@ -11,6 +11,9 @@ import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
 import { config } from 'node-config'
 import { process } from 'process'
+import { config } from '../../config' 
+import dotenv from 'dotenv'
+
 
 
 const URL = 'http://localhost:3000'
@@ -246,8 +249,7 @@ password: process.env.TEST_USER_PASSWORD || 'test-password'
         .expect('json', 'error', 'Unauthenticated user')
     })
 
-    it('Returns proper response for custom callbacks', async () => {
-      const functionTest = trainingData.data.filter(data => data.intent === 'queries.functionTest')
+        password: process.env.TEST_USER_PASSWORD
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
