@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 describe('/', () => {
   describe('challenge "jwtUnsigned"', () => {
     it('should accept an unsigned token with email jwtn3d@juice-sh.op in the payload ', () => {
@@ -19,11 +21,7 @@ describe('/', () => {
           cy.window().then(() => {
             localStorage.setItem(
               'token',
-              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoicnNhX2xvcmRAanVpY2Utc2gub3AifSwiaWF0IjoxNTgzMDM3NzExfQ.gShXDT5TrE5736mpIbfVDEcQbLfteJaQUG7Z0PH8Xc8'
-            )
-          })
-          cy.visit('/#/')
-
+              })()
           cy.expectChallengeSolved({ challenge: 'Forged Signed JWT' })
         }
       })
