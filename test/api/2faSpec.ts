@@ -6,6 +6,8 @@
 import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
+import 'dotenv/config';
+
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
 
@@ -428,7 +430,7 @@ describe('/rest/2fa/disable', () => {
   it('POST should not be possible to disable 2fa without the correct password', async () => {
     const email = 'fooooodisable1@bar.com'
     const password = '123456'
-    const totpSecret = 'ASDVAJSDUASZGDIADBJS'
+const totpSecret = process.env.TEST_TOTP_SECRET || 'default-test-secret'
 
     await register({ email, password, totpSecret })
     const { token } = await login({ email, password, totpSecret })
