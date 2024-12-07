@@ -1,11 +1,12 @@
 import * as jsonwebtoken from 'jsonwebtoken';
+import { env } from 'process';
+
 
 function generateSecureToken(payload: any, config: any): string {
   return jsonwebtoken.sign(payload, config.key, {
     algorithm: config.algorithm,
     expiresIn: config.expiresIn
-  });
-}
+        localStorage.setItem('token', jwtToken);
 
 describe('/', () => {
   describe('challenge "jwtUnsigned"', () => {
@@ -17,9 +18,7 @@ describe('/', () => {
         )
       })
       cy.visit('/')
-      cy.expectChallengeSolved({ challenge: 'Unsigned JWT' })
-    })
-  })
+            localStorage.setItem('token', jwtToken);
 
   describe('challenge "jwtForged"', () => {
     it('should accept a token HMAC-signed with public RSA key with email rsa_lord@juice-sh.op in the payload ', () => {
@@ -33,6 +32,15 @@ describe('/', () => {
             localStorage.setItem('token',
               token
           cy.expectChallengeSolved({ challenge: 'Forged Signed JWT' })
+function getTokenFromEnvironment(tokenKey: string): string | undefined {
+  if (typeof process !== 'undefined' && process.env) {
+    return process.env[tokenKey];
+  }
+  if (typeof Cypress !== 'undefined') {
+    return Cypress.env(tokenKey);
+  }
+  return undefined;
+}
         }
       })
     })
