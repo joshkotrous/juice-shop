@@ -41,7 +41,7 @@ interface ResponseWithUser {
 interface IAuthenticatedUsers {
   tokenMap: Record<string, ResponseWithUser>
   idMap: Record<string, string>
-  put: (token: string, user: ResponseWithUser) => void
+}
   get: (token: string) => ResponseWithUser | undefined
   tokenOf: (user: UserModel) => string | undefined
   from: (req: Request) => ResponseWithUser | undefined
