@@ -39,6 +39,8 @@ import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-s
 
 import authenticatedUsers from './routes/authenticatedUsers'
 import { Request, Response, NextFunction } from 'express'
+const security = require('./middleware/security')
+
 const ensureSecureDirectoryAccess = () => {
   return (req, res, next) => {
     if (req.path.includes('..') || req.path.includes('~') || /[<>:"|?*]/.test(req.path)) {
@@ -265,8 +267,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
       origEnd.apply(this, arguments)
     }
     next()
-  }
-
+app.use('/support/logs', security.isAuthorized(), serveIndex('logs', { autoIndex: false, icons: false }))
   // vuln-code-snippet start directoryListingChallenge accessLogDisclosureChallenge
   /* /ftp directory browsing and file download */ // vuln-code-snippet neutral-line directoryListingChallenge
   app.use('/ftp', serveIndexMiddleware, serveIndex('ftp', { icons: true })) // vuln-code-snippet vuln-line directoryListingChallenge
