@@ -15,6 +15,9 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FormSubmitService } from '../Services/form-submit.service'
 import { ConfigurationService } from '../Services/configuration.service'
 import { BasketService } from '../Services/basket.service'
+import { Injectable } from '@angular/core';
+import { ConfigurationService } from '../services/configuration.service';
+
 
 library.add(faKey, faEye, faEyeSlash, faGoogle)
 
@@ -35,7 +38,6 @@ export class LoginComponent implements OnInit {
   public user: any
   public rememberMe: UntypedFormControl = new UntypedFormControl(false)
   public error: any
-  public clientId = '1005568560502-6hm16lef8oh46hr2d98vf2ohlnj4nfhq.apps.googleusercontent.com'
   public oauthUnavailable: boolean = true
   public redirectUri: string = ''
   constructor (private readonly configurationService: ConfigurationService, private readonly userService: UserService, private readonly windowRefService: WindowRefService, private readonly cookieService: CookieService, private readonly router: Router, private readonly formSubmitService: FormSubmitService, private readonly basketService: BasketService, private readonly ngZone: NgZone) { }
