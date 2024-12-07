@@ -21,6 +21,8 @@ import { AdminSectionInstruction } from './challenges/adminSection'
 import { ReflectedXssInstruction } from './challenges/reflectedXss'
 import { snarkdown } from 'snarkdown';
 import DOMPurify from 'dompurify';
+import { DOMPurify } from 'dompurify';
+
 
 
 const challengeInstructions: ChallengeInstruction[] = [
@@ -107,7 +109,7 @@ function loadHint (hint: ChallengeHint): HTMLElement {
   picture.style.width = '64px'
   picture.style.height = '64px'
   picture.style.marginRight = '8px'
-  picture.src = '/assets/public/images/hackingInstructor.png'
+textBox.textContent = snarkdown(hint.text)
 
   const textBox = document.createElement('span')
   textBox.style.flexGrow = '2'
