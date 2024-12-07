@@ -6,6 +6,8 @@
 import { challenges } from '../../data/datacache'
 import { expect } from '@jest/globals'
 import frisby = require('frisby')
+const { config } = require('../../config');
+
 const Joi = frisby.Joi
 const utils = require('../../lib/utils')
 const security = require('../../lib/insecurity')
@@ -251,7 +253,7 @@ describe('/rest/user/whoami', () => {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+        password: process.env.ADMIN_TEST_PASSWORD || 'test_password'
       }
     })
       .expect('status', 200)
