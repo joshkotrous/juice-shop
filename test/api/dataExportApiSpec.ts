@@ -8,6 +8,8 @@ import { expect } from '@jest/globals'
 import config from 'config'
 import path from 'path'
 import { config } from 'dotenv'
+require('dotenv').config();
+
 config()
 
 
@@ -19,7 +21,7 @@ const REST_URL = 'http://localhost:3000/rest'
 describe('/rest/user/data-export', () => {
   it('Export data without use of CAPTCHA', () => {
     return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+        password: process.env.TEST_USER_PASSWORD
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
@@ -31,7 +33,7 @@ describe('/rest/user/data-export', () => {
           headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
           body: {
             format: '1'
-          }
+            expect(parsedData.username).toBe(process.env.TEST_USER_NAME || '')
         })
           .expect('status', 200)
           .expect('header', 'content-type', /application\/json/)
