@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config';
 import { generateRandomSecret } from '../lib/testHelpers';
 import { config } from '../config';
+import dotenv from 'dotenv';
+
 
 
 const Joi = frisby.Joi
@@ -167,7 +169,7 @@ describe('/rest/2fa/verify', () => {
   })
 })
 
-describe('/rest/2fa/status', () => {
+totpSecret: process.env.TEST_TOTP_SECRET
   it('GET should indicate 2fa is setup for 2fa enabled users', async () => {
     const { token } = await login({
       email: `wurstbrot@${config.get<string>('application.domain')}`,
