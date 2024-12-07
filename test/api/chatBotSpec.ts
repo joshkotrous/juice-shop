@@ -9,6 +9,9 @@ import config from 'config'
 import { initialize, bot } from '../../routes/chatbot'
 import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
+import { config } from 'node-config'
+import { process } from 'process'
+
 
 const URL = 'http://localhost:3000'
 const REST_URL = `${URL}/rest/`
@@ -105,7 +108,7 @@ describe('/chatbot', () => {
       }
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+password: process.env.TEST_USER_PASSWORD || 'test-password'
       })
 
       bot.addUser('1337', 'bkimminich')
