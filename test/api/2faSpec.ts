@@ -7,6 +7,9 @@ import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
 import { config } from 'config';
+import { config } from 'dotenv';
+config();
+
 
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
@@ -167,7 +170,7 @@ describe('/rest/2fa/verify', () => {
 describe('/rest/2fa/status', () => {
   it('GET should indicate 2fa is setup for 2fa enabled users', async () => {
     const { token } = await login({
-      email: `wurstbrot@${config.get<string>('application.domain')}`,
+            throw new Error('TEST_2FA_SECRET environment variable must be set')
       password: 'EinBelegtesBrotMitSchinkenSCHINKEN!',
       totpSecret: 'IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH'
     })
