@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   public user: any
   public rememberMe: UntypedFormControl = new UntypedFormControl(false)
   public error: any
-  public clientId = '1005568560502-6hm16lef8oh46hr2d98vf2ohlnj4nfhq.apps.googleusercontent.com'
+public clientId = ''
   public oauthUnavailable: boolean = true
   public redirectUri: string = ''
   constructor (private readonly configurationService: ConfigurationService, private readonly userService: UserService, private readonly windowRefService: WindowRefService, private readonly cookieService: CookieService, private readonly router: Router, private readonly formSubmitService: FormSubmitService, private readonly basketService: BasketService, private readonly ngZone: NgZone) { }
@@ -47,24 +47,12 @@ export class LoginComponent implements OnInit {
       this.user.email = email
       this.rememberMe.setValue(true)
     } else {
-      this.rememberMe.setValue(false)
-    }
-
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    this.redirectUri = `${this.windowRefService.nativeWindow.location.protocol}//${this.windowRefService.nativeWindow.location.host}`
-    this.configurationService.getApplicationConfiguration().subscribe((config) => {
-      if (config?.application?.googleOauth) {
-        this.clientId = config.application.googleOauth.clientId
+          this.redirectUri = authorizedRedirect?.proxy || authorizedRedirect?.uri || this.redirectUri
         const authorizedRedirect = config.application.googleOauth.authorizedRedirects.find(r => r.uri === this.redirectUri)
         if (authorizedRedirect) {
-          this.oauthUnavailable = false
-          this.redirectUri = authorizedRedirect.proxy ? authorizedRedirect.proxy : authorizedRedirect.uri
-        } else {
-          this.oauthUnavailable = true
-          console.log(this.redirectUri + ' is not an authorized redirect URI for this application.')
+    } catch (err) {
         }
-      }
-    }, (err) => { console.log(err) })
+    }
 
     this.formSubmitService.attachEnterKeyHandler('login-form', 'loginButton', () => { this.login() })
   }
@@ -104,7 +92,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  googleLogin () {
-    this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}`)
+      this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}`)
+  }
+
   }
 }
