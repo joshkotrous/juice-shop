@@ -10,6 +10,9 @@ import 'dotenv/config';
 import { generateRandomSecret } from '../lib/testHelpers';
 import { config } from '../config';
 import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 
 
@@ -167,7 +170,7 @@ describe('/rest/2fa/verify', () => {
     })
       .expect('status', 401)
   })
-})
+      totpSecret: process.env.TEST_2FA_SECRET || 'test-2fa-secret'
 
 totpSecret: process.env.TEST_TOTP_SECRET
   it('GET should indicate 2fa is setup for 2fa enabled users', async () => {
