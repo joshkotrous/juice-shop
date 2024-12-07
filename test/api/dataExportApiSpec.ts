@@ -7,6 +7,8 @@ import frisby = require('frisby')
 import { expect } from '@jest/globals'
 import config from 'config'
 import path from 'path'
+import * as process from 'process';
+
 const path = require('path')
 const fs = require('fs')
 require('dotenv').config()
@@ -75,7 +77,7 @@ password: process.env.TEST_USER_PASSWORD
   })
 
   it('Export data using right answer to CAPTCHA', () => {
-    return frisby.post(REST_URL + '/user/login', {
+        password: process.env.TEST_USER_PASSWORD || 'dummy-password'
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
