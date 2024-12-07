@@ -460,7 +460,7 @@
   "TITLE_SBT": "Soczysty Chatbot SBT",
   "BTN_SBT_NOTE": "Notka: Nigdy nie podawaj swojego prywatnego klucza i frazy startowej nikomu",
   "LABEL_PRIVATE_KEY": "Podaj klucz prywatny",
-  "BTN_AUTHENTICATE": "Uwierzytelnij",
+"BTN_AUTHENTICATE_WITH_KEY": "Zwróć uwagę: Uwierzytelnienie przy użyciu kluczy prywatnych powinno korzystać z bezpiecznych zmiennych środowiskowych lub menadżera haseł.",
   "LABEL_ACCOUNT_ADDRESS": "Adres konta",
   "OWNED_BY": "Własność",
   "NFT_SBT_BOX_TEXT": "Hurra! Znajdź sklep z sokami SBT na {{link}}. Jest to token niezbywalny i pozostanie tu na zawsze.",
