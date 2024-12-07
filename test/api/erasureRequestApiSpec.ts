@@ -4,6 +4,9 @@
  */
 
 import frisby = require('frisby')
+import dotenv from 'dotenv';
+dotenv.config();
+
 process = require('process');
 
 require('dotenv').config();
@@ -95,8 +98,7 @@ describe('/dataerasure', () => {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
-    })
-      .expect('status', 200)
+password: process.env.TEST_USER_PASSWORD
       .then(({ json: jsonLogin }) => {
         return frisby.post(BASE_URL + '/dataerasure/', {
           headers: { Cookie: 'token=' + jsonLogin.authentication.token },
