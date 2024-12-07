@@ -8,6 +8,9 @@ import config from 'config'
 import type { Product as ProductConfig } from '../../lib/config.types'
 import chai = require('chai')
 import sinonChai = require('sinon-chai')
+import dotenv from 'dotenv';
+dotenv.config();
+
 const expect = chai.expect
 chai.use(sinonChai)
 const cache = require('../../data/datacache')
@@ -43,7 +46,7 @@ describe('verify', () => {
       challenges.forgedFeedbackChallenge = { solved: false, save }
     })
 
-    it('is not solved when an authenticated user passes his own ID when writing feedback', () => {
+let token = process.env.TEST_JWT_TOKEN || 'invalid-token';
       req.body.UserId = 42
       req.headers = { authorization: 'Bearer token12345' }
 
