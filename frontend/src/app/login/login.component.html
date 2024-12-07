@@ -24,8 +24,7 @@
 
       <mat-form-field color="accent" appearance="outline">
         <mat-label translate>LABEL_PASSWORD</mat-label>
-        <input id="password" #password name="password"
-               [formControl]="passwordControl"
+               data-lpignore="true"
                (focus)="this.error=null"
                matInput placeholder="" [type]="hide ? 'password' : 'text'"
                aria-label="Text field for the login password">
