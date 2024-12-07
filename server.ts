@@ -38,6 +38,9 @@ import customizeApplication from './lib/startup/customizeApplication'
 import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-snippet hide-line
 
 import authenticatedUsers from './routes/authenticatedUsers'
+import { Request, Response, NextFunction } from 'express'
+
+
 
 const startTime = Date.now()
 const finale = require('finale-rest')
@@ -261,13 +264,34 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   app.use('/ftp(?!/quarantine)/:file', fileServer()) // vuln-code-snippet vuln-line directoryListingChallenge
   app.use('/ftp/quarantine/:file', quarantineServer()) // vuln-code-snippet neutral-line directoryListingChallenge
 
-  app.use('/.well-known', serveIndexMiddleware, serveIndex('.well-known', { icons: true, view: 'details' }))
   app.use('/.well-known', express.static('.well-known'))
-
-  /* /encryptionkeys directory browsing */
-  app.use('/encryptionkeys', serveIndexMiddleware, serveIndex('encryptionkeys', { icons: true, view: 'details' }))
   app.use('/encryptionkeys/:file', keyServer())
 
+app.use('/.well-known', security.isAuthorized(), serveIndexMiddleware, express.static('.well-known'))
+
+app.use('/encryptionkeys',
+  security.isAuthorized(),
+  serveIndexMiddleware, 
+  (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+      next();
+    } else {
+      res.status(403).send('Unauthorized');
+    }
+  },
+  express.static('encryptionkeys')  
+)
+
+app.use('/encryptionkeys/:file', 
+  security.isAuthorized(),
+  (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+      keyServer()(req, res, next);
+    } else {
+      res.status(403).send('Unauthorized');
+    }
+  }
+)
   /* /logs directory browsing */ // vuln-code-snippet neutral-line accessLogDisclosureChallenge
   app.use('/support/logs', serveIndexMiddleware, serveIndex('logs', { icons: true, view: 'details' })) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
   app.use('/support/logs', verify.accessControlChallenges()) // vuln-code-snippet hide-line
