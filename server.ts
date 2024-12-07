@@ -39,6 +39,9 @@ import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-s
 
 import authenticatedUsers from './routes/authenticatedUsers'
 import { Request, Response, NextFunction } from 'express'
+import serveIndex from 'serve-index'
+import { security } from '../lib/security'
+
 const security = require('./middleware/security')
 
 const ensureSecureDirectoryAccess = () => {
@@ -255,7 +258,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
           let relativePath = path.relative(reqPath, matchedUrl)
           if (relativePath === '') {
             relativePath = currentFolder
-          } else if (!relativePath.startsWith('.') && currentFolder !== '') {
+app.use('/ftp', security.isAuthorized(), security.appendUserId(), serveIndex('ftp', { icons: true, dotfiles: 'deny', displayHidden: false })) // vuln-code-snippet vuln-line directoryListingChallenge
             relativePath = currentFolder + '/' + relativePath
           } else {
             relativePath = relativePath.replace('..', '.')
