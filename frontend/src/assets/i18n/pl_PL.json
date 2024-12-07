@@ -459,7 +459,7 @@
   "LABEL_OUTPUT": "Wyjście",
   "TITLE_SBT": "Soczysty Chatbot SBT",
   "BTN_SBT_NOTE": "Notka: Nigdy nie podawaj swojego prywatnego klucza i frazy startowej nikomu",
-  "LABEL_PRIVATE_KEY": "Podaj klucz prywatny",
+  "LABEL_ACCESS_CODE": "Podaj kod dostępu",
   "BTN_AUTHENTICATE": "Uwierzytelnij",
   "LABEL_ACCOUNT_ADDRESS": "Adres konta",
   "OWNED_BY": "Własność",
