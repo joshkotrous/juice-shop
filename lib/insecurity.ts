@@ -23,6 +23,8 @@ import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { UserModel } from './models/user.model';
 import { ResponseWithUser } from './interfaces/responses';
+import crypto from 'crypto';
+
 
 
 export const publicKey = fs ? fs.readFileSync('encryptionkeys/jwt.pub', 'utf8') : 'placeholder-public-key'
@@ -148,10 +150,21 @@ export const isRedirectAllowed = (url: string) => {
 // vuln-code-snippet end redirectCryptoCurrencyChallenge redirectChallenge
 
 export const roles = {
-  customer: 'customer',
-  deluxe: 'deluxe',
+  const hmac = crypto.createHmac('sha256', secret)
   accounting: 'accounting',
   admin: 'admin'
+}
+
+const getSecretFromConfig = async (): Promise<string> => {
+  try {
+    const configSecret = process.env.HMAC_SECRET;
+    if (!configSecret) {
+      throw new Error('HMAC secret not configured');
+    }
+    return configSecret;
+  } catch (error) {
+    throw new Error('Failed to load HMAC secret from configuration');
+  }
 }
 
 export const deluxeToken = (email: string) => {
