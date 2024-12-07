@@ -9,6 +9,8 @@ import chai = require('chai')
 import { expect } from 'chai';
 import { security } from '../server/security';
 import { sanitizeHtml } from '../../lib/insecurity';
+const html = require('html-escaper');
+
 
 
 const expect = chai.expect
@@ -191,7 +193,7 @@ describe('insecurity', () => {
     })
 
     it('returns input unchanged for HTML input with only harmless links', () => {
-      expect(security.sanitizeSecure('<a href="bla.blubb">Please see here for details!</a>')).to.equal('<a href="bla.blubb">Please see here for details!</a>')
+expect(security.sanitizeSecure(html.escape('Sani<script>alert("ScriptXSS")</script>tizedScript'))).to.equal('SanitizedScript')
     })
 
     it('removes all Javascript from HTML input', () => {
