@@ -6,6 +6,8 @@
 import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
+import { config } from 'config';
+
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
 
@@ -334,7 +336,7 @@ describe('/rest/2fa/setup', () => {
     const email = 'fooooo4@bar.com'
     const password = '123456'
 
-    const secret = 'ASDVAJSDUASZGDIADBJS'
+const secret = process.env.TEST_TOTP_SECRET || 'test-secret'
 
     await register({ email, password })
     const { token } = await login({ email, password })
