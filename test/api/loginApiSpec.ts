@@ -5,6 +5,8 @@
 
 import frisby = require('frisby')
 import config from 'config'
+import * as process from 'process'
+
 const Joi = frisby.Joi
 
 const API_URL = 'http://localhost:3000/api'
@@ -263,8 +265,7 @@ describe('/rest/saveLoginIp', () => {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
-      }
+        password: process.env.TEST_USER_PASSWORD
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
