@@ -1,4 +1,6 @@
 import { DomSanitizer, SecurityContext } from '@angular/platform-browser';
+import DOMPurify from 'dompurify';
+
 
 ngAfterViewInit () {
     const products = this.productService.search('')
@@ -56,7 +58,7 @@ ngAfterViewInit () {
     }, (err) => { console.log(err) })
   }
 
-  }
+tableData[i].description = DOMPurify.sanitize(tableData[i].description)
     for (let i = 0; i < tableData.length; i++) {
       tableData[i].description = tableData[i].description.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
     }
