@@ -6,6 +6,8 @@
 import frisby = require('frisby')
 import config from 'config'
 import * as process from 'process'
+import process from 'process'
+
 
 const Joi = frisby.Joi
 
@@ -139,7 +141,7 @@ describe('/rest/user/login', () => {
   it('POST login as bjoern.kimminich@gmail.com with known password', () => {
     return frisby.post(REST_URL + '/user/login', {
       headers: jsonHeader,
-      body: {
+        password: process.env.TEST_USER_PASSWORD
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
