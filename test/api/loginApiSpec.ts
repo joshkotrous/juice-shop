@@ -6,6 +6,8 @@
 import frisby = require('frisby')
 import config from 'config'
 import 'dotenv/config';
+import 'dotenv/config'
+
 require('dotenv').config();
 
 
@@ -139,7 +141,7 @@ describe('/rest/user/login', () => {
   })
 
   it('POST login as bjoern.kimminich@gmail.com with known password', () => {
-    return frisby.post(REST_URL + '/user/login', {
+        password: process.env.TEST_USER_PASSWORD
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
