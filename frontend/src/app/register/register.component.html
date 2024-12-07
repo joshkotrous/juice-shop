@@ -22,8 +22,7 @@
 
       <mat-form-field appearance="outline" color="accent">
         <mat-label translate>LABEL_PASSWORD</mat-label>
-        <input #password id="passwordControl" [formControl]="passwordControl" (focus)="this.error=null" type="password"
-               matInput aria-label="Field for the password">
+               aria-label="Field for the password">
         <mat-hint translate>
           <i class="fas fa-exclamation-circle"></i>
           <em style="margin-left:5px;" translate>{{ 'INVALID_PASSWORD_LENGTH' | translate: {length: '5-40'} }}</em>
@@ -39,9 +38,7 @@
 
       <mat-form-field appearance="outline" color="accent">
         <mat-label translate>LABEL_PASSWORD_REPEAT</mat-label>
-        <input #repeatPassword id="repeatPasswordControl" [formControl]="repeatPasswordControl"
-               (focus)="this.error=null" type="password" matInput aria-label="Field to confirm the password">
-        <mat-hint align="end">{{repeatPassword.value?.length || 0}}/40</mat-hint>
+               aria-label="Field to confirm the password">
         <mat-error *ngIf="repeatPasswordControl.invalid && repeatPasswordControl.errors.required" translate>
           MANDATORY_PASSWORD_REPEAT
         </mat-error>
