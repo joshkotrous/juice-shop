@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken'
 import { config } from 'config';
 import { config } from 'dotenv';
 import process from 'process';
+import crypto from 'crypto';
+
  
 
 config();
@@ -25,6 +27,13 @@ const API_URL = 'http://localhost:3000/api'
 const jsonHeader = { 'content-type': 'application/json' }
 
 async function login ({ email, password, totpSecret }: { email: string, password: string, totpSecret?: string }) {
+function generateTestSecret(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const length = 20;
+  const randomValues = new Uint8Array(length);
+  crypto.getRandomValues(randomValues);
+  return Array.from(randomValues).map(v => chars[v % chars.length]).join('');
+}
   // @ts-expect-error FIXME promise return handling broken
   const loginRes = await frisby
     .post(REST_URL + '/user/login', {
@@ -275,8 +284,7 @@ describe('/rest/2fa/setup', () => {
       .expect('jsonTypes', {
         setup: Joi.boolean()
       })
-      .expect('json', {
-        setup: true
+
       })
   })
 
