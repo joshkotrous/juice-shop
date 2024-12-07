@@ -7,6 +7,9 @@ import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config';
+import { generateRandomSecret } from '../lib/testHelpers';
+import { config } from '../config';
+
 
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
@@ -334,7 +337,7 @@ describe('/rest/2fa/setup', () => {
 
   it('POST should fail if the token is of the wrong type', async () => {
     const email = 'fooooo4@bar.com'
-    const password = '123456'
+const secret = process.env.TEST_SECRET ?? generateRandomSecret()
 
     const secret = 'ASDVAJSDUASZGDIADBJS'
 
