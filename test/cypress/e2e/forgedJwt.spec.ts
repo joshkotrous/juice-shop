@@ -1,3 +1,12 @@
+import * as jsonwebtoken from 'jsonwebtoken';
+
+function generateSecureToken(payload: any, config: any): string {
+  return jsonwebtoken.sign(payload, config.key, {
+    algorithm: config.algorithm,
+    expiresIn: config.expiresIn
+  });
+}
+
 describe('/', () => {
   describe('challenge "jwtUnsigned"', () => {
     it('should accept an unsigned token with email jwtn3d@juice-sh.op in the payload ', () => {
@@ -21,9 +30,8 @@ describe('/', () => {
               'token',
               'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoicnNhX2xvcmRAanVpY2Utc2gub3AifSwiaWF0IjoxNTgzMDM3NzExfQ.gShXDT5TrE5736mpIbfVDEcQbLfteJaQUG7Z0PH8Xc8'
             )
-          })
-          cy.visit('/#/')
-
+            localStorage.setItem('token',
+              token
           cy.expectChallengeSolved({ challenge: 'Forged Signed JWT' })
         }
       })
