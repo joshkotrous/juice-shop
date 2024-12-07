@@ -1,10 +1,12 @@
 import 'dotenv/config'
+import { config } from 'dotenv'
+
 
 describe('/#/basket', () => {
   describe('as wurstbrot', () => {
     beforeEach(() => {
       cy.login({
-        email: 'wurstbrot',
+        }
         password: 'EinBelegtesBrotMitSchinkenSCHINKEN!',
         totpSecret: process.env.TEST_TOTP_SECRET || ''
       })
