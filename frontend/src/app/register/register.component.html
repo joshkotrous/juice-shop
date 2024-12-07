@@ -22,7 +22,7 @@
 
       <mat-form-field appearance="outline" color="accent">
         <mat-label translate>LABEL_PASSWORD</mat-label>
-        <input #password id="passwordControl" [formControl]="passwordControl" (focus)="this.error=null" type="password"
+              autocomplete="new-password" [attr.maxlength]="40"
                matInput aria-label="Field for the password">
         <mat-hint translate>
           <i class="fas fa-exclamation-circle"></i>
