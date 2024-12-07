@@ -8,6 +8,8 @@ import config from 'config'
 import type { Product as ProductConfig } from '../../lib/config.types'
 import chai = require('chai')
 import sinonChai = require('sinon-chai')
+import security = require('../../lib/insecurity')
+
 const expect = chai.expect
 chai.use(sinonChai)
 const cache = require('../../data/datacache')
@@ -294,7 +296,7 @@ describe('verify', () => {
         Header: { "alg": "HS256", "typ": "JWT" }
         Payload: { "data": { "email": "rsa_lord@juice-sh.op" }, "iat": 1508639612, "exp": 9999999999 }
          */
-        req.headers = { authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoicnNhX2xvcmRAanVpY2Utc2gub3AifSwiaWF0IjoxNTgyMjIxNTc1fQ.ycFwtqh4ht4Pq9K5rhiPPY256F9YCTIecd4FHFuSEAg' }
+req.headers = { authorization: `Bearer ${security.authorize({ data: { email: 'rsa_lord@juice-sh.op' }})}` }
 
         verify.jwtChallenges()(req, res, next)
 
