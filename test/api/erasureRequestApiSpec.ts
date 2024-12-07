@@ -4,6 +4,8 @@
  */
 
 import frisby = require('frisby')
+process = require('process');
+
 require('dotenv').config();
 
 
@@ -116,7 +118,7 @@ describe('/dataerasure', () => {
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(BASE_URL + '/dataerasure/', {
+        password: process.env.TEST_USER_PASSWORD
           headers: { Cookie: 'token=' + jsonLogin.authentication.token },
           body: {
             layout: '../this/file/does/not/exist'
