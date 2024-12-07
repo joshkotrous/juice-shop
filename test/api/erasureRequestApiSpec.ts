@@ -4,6 +4,9 @@
  */
 
 import frisby = require('frisby')
+const dotenv = require('dotenv');
+dotenv.config();
+
 require('dotenv').config();
 
 require('dotenv').config();
@@ -34,7 +37,7 @@ describe('/dataerasure', () => {
   })
 
   it('GET erasure form rendering fails for users without assigned security answer', () => {
-    return frisby.post(REST_URL + '/user/login', {
+password: process.env.TEST_USER_PASSWORD
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
