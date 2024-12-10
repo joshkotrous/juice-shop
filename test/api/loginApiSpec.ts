@@ -5,6 +5,9 @@
 
 import frisby = require('frisby')
 import config from 'config'
+import { config } from 'dotenv';
+config();
+
 const process = require('process');
 
 const Joi = frisby.Joi
@@ -240,10 +243,7 @@ password: process.env.TEST_USER_PASSWORD
 
 describe('/rest/saveLoginIp', () => {
   it('GET last login IP will be saved as True-Client-IP header value', () => {
-    return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
+      }
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
     })
@@ -260,11 +260,7 @@ describe('/rest/saveLoginIp', () => {
       })
   })
 
-  xit('GET last login IP will be saved as remote IP when True-Client-IP is not present', () => { // FIXME Started to fail regularly on CI under Linux
-    return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
+      }
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
     })
@@ -278,5 +274,12 @@ describe('/rest/saveLoginIp', () => {
           .expect('status', 200)
           .expect('json', { lastLoginIp: '127.0.0.1' })
       })
+
+function getTestCredentials() {
+  return {
+    email: process.env.TEST_USER_EMAIL,
+    password: process.env.TEST_USER_PASSWORD
+  };
+}
   })
 })
