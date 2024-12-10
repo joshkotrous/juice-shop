@@ -10,6 +10,10 @@ import { initialize, bot } from '../../routes/chatbot'
 import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
 import * as process from 'process';
+import { getTestUserCredentials } from '../support/test-utils'
+import { config } from 'dotenv'
+config()
+
 
 
 const URL = 'http://localhost:3000'
@@ -103,9 +107,7 @@ describe('/chatbot', () => {
 
     it('Returns greeting if username is defined', async () => {
       if (bot == null) {
-        throw new Error('Bot not initialized')
-      }
-      const { token } = await login({
+        password: process.env.TEST_USER_PASSWORD
         email: 'bjoern.kimminich@gmail.com',
         )
       })
