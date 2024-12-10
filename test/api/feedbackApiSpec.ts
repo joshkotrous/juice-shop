@@ -5,6 +5,9 @@
 import { challenges } from '../../data/datacache'
 import frisby = require('frisby')
 import { expect } from '@jest/globals'
+const { config } = require('dotenv');
+config();
+
 const Joi = frisby.Joi
 const utils = require('../../lib/utils')
 const security = require('../../lib/insecurity')
@@ -115,8 +118,7 @@ describe('/api/Feedbacks', () => {
     return frisby.post(REST_URL + '/user/login', {
       headers: jsonHeader,
       body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+password: process.env.TEST_USER_PASSWORD
       }
     })
       .expect('status', 200)
@@ -145,8 +147,7 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback is associated with any passed user ID', () => {
-    return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+password: process.env.TEST_USER_PASSWORD
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
