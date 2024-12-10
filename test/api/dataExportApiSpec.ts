@@ -8,6 +8,8 @@ import { expect } from '@jest/globals'
 import config from 'config'
 import path from 'path'
 import { config } from './config'
+import 'dotenv/config'
+
 
 
 const fs = require('fs')
@@ -19,7 +21,7 @@ describe('/rest/user/data-export', () => {
   it('Export data without use of CAPTCHA', () => {
     return frisby.post(REST_URL + '/user/login', {
       headers: jsonHeader,
-      body: {
+password: process.env.TEST_USER_PASSWORD || 'default-test-password'
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
