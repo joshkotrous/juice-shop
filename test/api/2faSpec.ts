@@ -8,6 +8,10 @@ import config from 'config'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import crypto from 'crypto';
+import { config } from 'config';
+import { login } from './helpers/api';
+import * as process from 'process';
+
 
 
 const Joi = frisby.Joi
@@ -166,8 +170,7 @@ describe('/rest/2fa/verify', () => {
   })
 })
 
-describe('/rest/2fa/status', () => {
-  it('GET should indicate 2fa is setup for 2fa enabled users', async () => {
+totpSecret: `${process.env.TEST_USER_TOTP_SECRET}`
     const { token } = await login({
       email: `wurstbrot@${config.get<string>('application.domain')}`,
       password: 'EinBelegtesBrotMitSchinkenSCHINKEN!',
