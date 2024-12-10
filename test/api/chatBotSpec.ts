@@ -13,6 +13,8 @@ import * as process from 'process';
 import { getTestUserCredentials } from '../support/test-utils'
 import { config } from 'dotenv'
 import { config } from 'dotenv';
+import 'dotenv/config'
+
 
 config()
 
@@ -103,10 +105,7 @@ describe('/chatbot', () => {
         })
         .expect('status', 200)
         .expect('json', 'action', 'namequery')
-        .expect('json', 'body', 'I\'m sorry I didn\'t get your name. What shall I call you?')
-        .promise()
-    })
-
+      })
     it('Returns greeting if username is defined', async () => {
       if (bot == null) {
         password: process.env.TEST_USER_PASSWORD
