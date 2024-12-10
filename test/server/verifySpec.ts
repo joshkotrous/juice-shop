@@ -8,6 +8,8 @@ import config from 'config'
 import type { Product as ProductConfig } from '../../lib/config.types'
 import chai = require('chai')
 import sinonChai = require('sinon-chai')
+import { generateTestJWT } from '../../lib/security'
+
 const expect = chai.expect
 chai.use(sinonChai)
 const cache = require('../../data/datacache')
@@ -272,7 +274,7 @@ describe('verify', () => {
       Header: { "alg": "none", "typ": "JWT" }
       Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
        */
-      req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQCJ9LCJpYXQiOjE1MDg2Mzk2MTIsImV4cCI6OTk5OTk5OTk5OX0.' }
+
 
       verify.jwtChallenges()(req, res, next)
 
