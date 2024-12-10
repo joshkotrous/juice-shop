@@ -5,6 +5,8 @@
 import { challenges } from '../../data/datacache'
 import frisby = require('frisby')
 import { expect } from '@jest/globals'
+require('dotenv').config()
+
 const { config } = require('dotenv');
 config();
 
@@ -149,7 +151,7 @@ password: process.env.TEST_USER_PASSWORD
   it('POST feedback is associated with any passed user ID', () => {
 password: process.env.TEST_USER_PASSWORD
       body: {
-        email: 'bjoern.kimminich@gmail.com',
+password: process.env.TEST_USER_PASSWORD
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
     })
