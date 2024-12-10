@@ -12,6 +12,8 @@ import * as utils from '../../lib/utils'
 import * as process from 'process';
 import { getTestUserCredentials } from '../support/test-utils'
 import { config } from 'dotenv'
+import { config } from 'dotenv';
+
 config()
 
 
@@ -136,8 +138,7 @@ describe('/chatbot', () => {
     })
 
     it('Returns proper response for registered user', async () => {
-      if (bot == null) {
-        throw new Error('Bot not initialized')
+        password: process.env.TEST_USER_PASSWORD as string
       }
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
