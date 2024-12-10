@@ -5,6 +5,9 @@
 
 import frisby = require('frisby')
 import { expect } from '@jest/globals'
+import dotenv from 'dotenv';
+dotenv.config();
+
 const security = require('../../lib/insecurity')
 
 const API_URL = 'http://localhost:3000/api'
@@ -98,7 +101,7 @@ describe('/rest/basket/:id', () => {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+password: process.env.TEST_USER_PASSWORD
       }
     })
       .expect('status', 200)
