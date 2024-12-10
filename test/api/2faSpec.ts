@@ -11,6 +11,8 @@ import crypto from 'crypto';
 import { config } from 'config';
 import { login } from './helpers/api';
 import * as process from 'process';
+import { config } from 'config'
+
 
 
 
@@ -360,9 +362,7 @@ const secret = generateTestSecret()
             secret,
             type: 'totp_setup_secret_foobar'
           }),
-          initialToken: otplib.authenticator.generate(secret)
-        }
-      })
+if (!totpSecret) throw new Error('TEST_USER_TOTP_SECRET environment variable must be set')
       .expect('status', 401)
   })
 
