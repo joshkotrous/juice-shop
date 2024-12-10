@@ -7,6 +7,8 @@ import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import crypto from 'crypto';
+
 
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
@@ -230,7 +232,7 @@ describe('/rest/2fa/status', () => {
 describe('/rest/2fa/setup', () => {
   it('POST should be able to setup 2fa for accounts without 2fa enabled', async () => {
     const email = 'fooooo1@bar.com'
-    const password = '123456'
+const secret = generateTestSecret()
 
     const secret = 'ASDVAJSDUASZGDIADBJS'
 
@@ -464,3 +466,11 @@ describe('/rest/2fa/disable', () => {
       })
   })
 })
+
+function generateTestSecret(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; 
+  const length = 20;
+  return Array.from(crypto.getRandomValues(new Uint8Array(length)))
+    .map(byte => chars[byte % chars.length])
+    .join('');
+}
