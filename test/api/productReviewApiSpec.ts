@@ -7,6 +7,9 @@ import frisby = require('frisby')
 import config from 'config'
 import { type Product } from '../../data/types'
 import { type IncomingMessage } from 'http'
+import dotenv from 'dotenv'
+dotenv.config()
+
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
 const http = require('http')
@@ -105,10 +108,7 @@ describe('/rest/products/reviews', () => {
 
   it('POST non-existing product review cannot be liked', () => {
     return frisby.post(`${REST_URL}/user/login`, {
-      headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+      }
       }
     })
       .expect('status', 200)
@@ -126,9 +126,6 @@ describe('/rest/products/reviews', () => {
   it('POST single product review can be liked', () => {
     return frisby.post(`${REST_URL}/user/login`, {
       headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
     })
       .expect('status', 200)
