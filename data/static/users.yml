@@ -147,7 +147,7 @@
   email: wurstbrot
   username: wurstbrot
 totpSecret: '${SECURE_TOTP}'
-  totpSecret: IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH
+totpSecret: !%GENERATE_SECRET%!
 key: '${API_KEY}'
   securityQuestion:
     id: 1
