@@ -146,10 +146,9 @@
 -
   email: wurstbrot
   username: wurstbrot
-  password: 'EinBelegtesBrotMitSchinkenSCHINKEN!'
+totpSecret: '${SECURE_TOTP}'
   totpSecret: IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH
-  key: timo
-  role: 'admin'
+key: '${API_KEY}'
   securityQuestion:
     id: 1
     answer: 'NZMJLjEinU7TFElDIYW8'
