@@ -9,6 +9,8 @@ import config from 'config'
 import { initialize, bot } from '../../routes/chatbot'
 import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
+import 'dotenv/config'
+
 
 const URL = 'http://localhost:3000'
 const REST_URL = `${URL}/rest/`
@@ -246,8 +248,7 @@ describe('/chatbot', () => {
     it('Returns proper response for custom callbacks', async () => {
       const functionTest = trainingData.data.filter(data => data.intent === 'queries.functionTest')
       const { token } = await login({
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+
       })
       const testCommand = functionTest[0].utterances[0]
       const testResponse = '3be2e438b7f3d04c89d7749f727bb3bd'
