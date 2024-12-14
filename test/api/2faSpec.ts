@@ -7,6 +7,8 @@ import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import * as crypto from 'crypto'
+
 
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
@@ -362,7 +364,7 @@ const secret = crypto.randomBytes(totpSecretLength).toString('hex').slice(0, tot
   })
 
   it('POST should fail if the account has already set up 2fa', async () => {
-    const email = `wurstbrot@${config.get<string>('application.domain')}`
+const totpSecret = process.env.TEST_TOTP_SECRET || generateTestTotpSecret()
     const password = 'EinBelegtesBrotMitSchinkenSCHINKEN!'
     const totpSecret = 'IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH'
 
@@ -376,6 +378,12 @@ const secret = crypto.randomBytes(totpSecretLength).toString('hex').slice(0, tot
           Authorization: 'Bearer ' + token,
           'content-type': 'application/json'
         },
+function generateTestTotpSecret(): string {
+  const crypto = require('crypto')
+  const buffer = crypto.randomBytes(20)
+  return buffer.toString('base32').replace(/=/g, '')
+}
+
         body: {
           password,
           setupToken: security.authorize({
