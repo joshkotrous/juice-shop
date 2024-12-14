@@ -4,6 +4,9 @@
  */
 
 import frisby = require('frisby')
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const jsonHeader = { 'content-type': 'application/json' }
 const BASE_URL = 'http://localhost:3000'
@@ -33,7 +36,7 @@ describe('/dataerasure', () => {
     return frisby.post(REST_URL + '/user/login', {
       headers: jsonHeader,
       body: {
-        email: 'bjoern.kimminich@gmail.com',
+        password: process.env.TEST_USER_PASSWORD || 'testUserPassword123'
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       }
     })
