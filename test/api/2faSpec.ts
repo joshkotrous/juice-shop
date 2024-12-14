@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import * as crypto from 'crypto'
 import { generateSecretKey } from '../lib/security';
+import process from 'process';
+
 
 
 
@@ -276,7 +278,7 @@ const secret = crypto.randomBytes(totpSecretLength).toString('hex').slice(0, tot
       .expect('json', {
         setup: true
       })
-  })
+}
 
   it('POST should fail if the password doesnt match', async () => {
     const email = 'fooooo2@bar.com'
