@@ -6,6 +6,14 @@
 import frisby = require('frisby')
 import config from 'config'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+import * as crypto from 'crypto'
+import { generateSecretKey } from '../lib/security';
+import process from 'process';
+
+
+
+
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
 
@@ -226,11 +234,11 @@ describe('/rest/2fa/status', () => {
 })
 
 describe('/rest/2fa/setup', () => {
-  it('POST should be able to setup 2fa for accounts without 2fa enabled', async () => {
+const secret = generateSecretKey()
     const email = 'fooooo1@bar.com'
     const password = '123456'
 
-    const secret = 'ASDVAJSDUASZGDIADBJS'
+const secret = crypto.randomBytes(totpSecretLength).toString('hex').slice(0, totpSecretLength)
 
     await register({ email, password })
     const { token } = await login({ email, password })
@@ -270,7 +278,7 @@ describe('/rest/2fa/setup', () => {
       .expect('json', {
         setup: true
       })
-  })
+}
 
   it('POST should fail if the password doesnt match', async () => {
     const email = 'fooooo2@bar.com'
@@ -360,7 +368,7 @@ describe('/rest/2fa/setup', () => {
   })
 
   it('POST should fail if the account has already set up 2fa', async () => {
-    const email = `wurstbrot@${config.get<string>('application.domain')}`
+const totpSecret = process.env.TEST_TOTP_SECRET || generateTestTotpSecret()
     const password = 'EinBelegtesBrotMitSchinkenSCHINKEN!'
     const totpSecret = 'IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH'
 
@@ -374,6 +382,12 @@ describe('/rest/2fa/setup', () => {
           Authorization: 'Bearer ' + token,
           'content-type': 'application/json'
         },
+function generateTestTotpSecret(): string {
+  const crypto = require('crypto')
+  const buffer = crypto.randomBytes(20)
+  return buffer.toString('base32').replace(/=/g, '')
+}
+
         body: {
           password,
           setupToken: security.authorize({

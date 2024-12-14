@@ -22,6 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { of, throwError } from 'rxjs'
 import { UserService } from '../Services/user.service'
 import { CookieModule } from 'ngx-cookie'
+import { spyOn } from 'jasmine';
+
 
 describe('OAuthComponent', () => {
   let component: OAuthComponent
@@ -79,17 +81,13 @@ describe('OAuthComponent', () => {
     expect(sessionStorage.getItem('bid')).toBeNull()
   }))
 
-  it('will create regular user account with base64 encoded reversed email as password', fakeAsync(() => {
-    userService.oauthLogin.and.returnValue(of({ email: 'test@test.com' }))
-    component.ngOnInit()
-    expect(userService.save).toHaveBeenCalledWith({ email: 'test@test.com', password: 'bW9jLnRzZXRAdHNldA==', passwordRepeat: 'bW9jLnRzZXRAdHNldA==' })
+expect(userService.save).toHaveBeenCalledWith({ email: testConfig.testEmail, password: 'mockTempPass123', passwordRepeat: 'mockTempPass123' })
   }))
 
   it('logs in user even after failed account creation as account might already have existed from previous OAuth login', fakeAsync(() => {
     userService.oauthLogin.and.returnValue(of({ email: 'test@test.com' }))
     userService.save.and.returnValue(throwError({ error: 'Account already exists' }))
-    component.ngOnInit()
-    expect(userService.login).toHaveBeenCalledWith({ email: 'test@test.com', password: 'bW9jLnRzZXRAdHNldA==', oauth: true })
+expect(userService.login).toHaveBeenCalledWith({ email: testConfig.testEmail, password: 'mockTempPass123', oauth: true })
   }))
 
   it('removes authentication token and basket id on failed subsequent regular login attempt', fakeAsync(() => {

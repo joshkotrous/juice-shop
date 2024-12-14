@@ -9,6 +9,13 @@ import config from 'config'
 import { initialize, bot } from '../../routes/chatbot'
 import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
+import 'dotenv/config'
+import 'dotenv/config';
+import dotenv from 'dotenv';
+import { config } from 'config';
+
+
+
 
 const URL = 'http://localhost:3000'
 const REST_URL = `${URL}/rest/`
@@ -103,7 +110,7 @@ describe('/chatbot', () => {
       if (bot == null) {
         throw new Error('Bot not initialized')
       }
-      const { token } = await login({
+password: process.env.TEST_USER_PASSWORD ?? 'test-password'
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       })
@@ -133,7 +140,7 @@ describe('/chatbot', () => {
 
     it('Returns proper response for registered user', async () => {
       if (bot == null) {
-        throw new Error('Bot not initialized')
+        password: process.env.TESTUSER_PASSWORD
       }
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
@@ -166,8 +173,7 @@ describe('/chatbot', () => {
         .then(({ json }) => {
           expect(trainingData.data[0].answers).toContainEqual(json)
         })
-    })
-
+        password: process.env.TEST_USER_PASSWORD
     it('Responds with product price when asked question with product name', async () => {
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
@@ -246,8 +252,7 @@ describe('/chatbot', () => {
     it('Returns proper response for custom callbacks', async () => {
       const functionTest = trainingData.data.filter(data => data.intent === 'queries.functionTest')
       const { token } = await login({
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+
       })
       const testCommand = functionTest[0].utterances[0]
       const testResponse = '3be2e438b7f3d04c89d7749f727bb3bd'

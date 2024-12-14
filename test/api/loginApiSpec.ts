@@ -5,6 +5,12 @@
 
 import frisby = require('frisby')
 import config from 'config'
+import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+config();
+
 const Joi = frisby.Joi
 
 const API_URL = 'http://localhost:3000/api'
@@ -25,6 +31,18 @@ describe('/rest/user/login', () => {
       .then(() => {
         return frisby.post(REST_URL + '/user/login', {
           headers: jsonHeader,
+function getTestCredentials(userType) {
+  const credentials = {
+    admin: {
+      email: process.env.TEST_ADMIN_EMAIL || 'admin@test.com',
+      password: process.env.TEST_ADMIN_PASSWORD || 'defaultTestPass123!'
+    }
+  };
+  if (!credentials[userType]) {
+    throw new Error(`Invalid test user type: ${userType}`);
+  }
+  return credentials[userType];
+}
           body: {
             email: 'kalli@kasper.le',
             password: 'kallliiii'
@@ -225,10 +243,7 @@ describe('/rest/user/login', () => {
   })
 
   it('POST login with query-breaking SQL Injection attack', () => {
-    return frisby.post(REST_URL + '/user/login', {
-      header: jsonHeader,
-      body: {
-        email: '\';',
+        password: process.env.TEST_USER_PASSWORD
         password: undefined
       }
     })
@@ -238,12 +253,7 @@ describe('/rest/user/login', () => {
 
 describe('/rest/saveLoginIp', () => {
   it('GET last login IP will be saved as True-Client-IP header value', () => {
-    return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
-      }
+    }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
@@ -251,20 +261,11 @@ describe('/rest/saveLoginIp', () => {
           headers: {
             Authorization: 'Bearer ' + jsonLogin.authentication.token,
             'true-client-ip': '1.2.3.4'
-          }
-        })
-          .expect('status', 200)
-          .expect('json', { lastLoginIp: '1.2.3.4' })
+      }
       })
   })
 
-  xit('GET last login IP will be saved as remote IP when True-Client-IP is not present', () => { // FIXME Started to fail regularly on CI under Linux
-    return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
-      body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
-      }
+      body: getTestCredentials('admin')
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {

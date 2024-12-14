@@ -7,6 +7,11 @@ import frisby = require('frisby')
 import { expect } from '@jest/globals'
 import config from 'config'
 import path from 'path'
+import { config } from './config'
+import { Environment } from './environment'
+require('dotenv').config();
+
+
 
 const fs = require('fs')
 
@@ -19,7 +24,7 @@ describe('/rest/user/data-export', () => {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+password: process.env.TEST_USER_PASSWORD
       }
     })
       .expect('status', 200)
@@ -43,7 +48,7 @@ describe('/rest/user/data-export', () => {
 
   it('Export data when CAPTCHA requested need right answer', () => {
     return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+        password: config.get<string>('test.credentials.bkimminich')
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
@@ -72,7 +77,7 @@ describe('/rest/user/data-export', () => {
 
   it('Export data using right answer to CAPTCHA', () => {
     return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+password: process.env.API_TEST_USER_PASSWORD
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='

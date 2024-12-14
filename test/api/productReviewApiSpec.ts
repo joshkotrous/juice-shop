@@ -7,6 +7,9 @@ import frisby = require('frisby')
 import config from 'config'
 import { type Product } from '../../data/types'
 import { type IncomingMessage } from 'http'
+import { config } from 'config';
+import * as process from 'process';
+
 const Joi = frisby.Joi
 const security = require('../../lib/insecurity')
 const http = require('http')
@@ -107,8 +110,7 @@ describe('/rest/products/reviews', () => {
     return frisby.post(`${REST_URL}/user/login`, {
       headers: jsonHeader,
       body: {
-        email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+password: adminPassword 
       }
     })
       .expect('status', 200)

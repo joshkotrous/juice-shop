@@ -1,10 +1,12 @@
+/// <reference types="cypress" />
+
 describe('/#/basket', () => {
   describe('as wurstbrot', () => {
     beforeEach(() => {
       cy.login({
         email: 'wurstbrot',
         password: 'EinBelegtesBrotMitSchinkenSCHINKEN!',
-        totpSecret: 'IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH'
+        totpSecret: Cypress.env('TOTP_SECRET')
       })
     })
 

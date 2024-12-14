@@ -1,3 +1,5 @@
+import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+
 <!--
   ~ Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
   ~ SPDX-License-Identifier: MIT
@@ -24,8 +26,7 @@
 
       <mat-form-field color="accent" appearance="outline">
         <mat-label translate>LABEL_PASSWORD</mat-label>
-        <input id="password" #password name="password"
-               [formControl]="passwordControl"
+               [formControl]="passwordControl" type="password"
                (focus)="this.error=null"
                matInput placeholder="" [type]="hide ? 'password' : 'text'"
                aria-label="Text field for the login password">
