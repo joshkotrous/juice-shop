@@ -11,6 +11,9 @@ import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
 import 'dotenv/config'
 import 'dotenv/config';
+import dotenv from 'dotenv';
+import { config } from 'config';
+
 
 
 
@@ -170,8 +173,7 @@ password: process.env.TEST_USER_PASSWORD ?? 'test-password'
         .then(({ json }) => {
           expect(trainingData.data[0].answers).toContainEqual(json)
         })
-    })
-
+        password: process.env.TEST_USER_PASSWORD
     it('Responds with product price when asked question with product name', async () => {
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
