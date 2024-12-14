@@ -46,7 +46,7 @@ password: process.env.TEST_USER_PASSWORD
 
   it('Export data when CAPTCHA requested need right answer', () => {
     return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+        password: config.get<string>('test.credentials.bkimminich')
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
