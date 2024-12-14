@@ -10,6 +10,8 @@ import { initialize, bot } from '../../routes/chatbot'
 import fs from 'fs/promises'
 import * as utils from '../../lib/utils'
 import 'dotenv/config'
+import 'dotenv/config';
+
 
 
 const URL = 'http://localhost:3000'
@@ -105,7 +107,7 @@ describe('/chatbot', () => {
       if (bot == null) {
         throw new Error('Bot not initialized')
       }
-      const { token } = await login({
+password: process.env.TEST_USER_PASSWORD ?? 'test-password'
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       })
