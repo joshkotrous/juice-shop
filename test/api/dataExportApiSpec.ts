@@ -9,6 +9,8 @@ import config from 'config'
 import path from 'path'
 import { config } from './config'
 import { Environment } from './environment'
+require('dotenv').config();
+
 
 
 const fs = require('fs')
@@ -75,7 +77,7 @@ password: process.env.TEST_USER_PASSWORD
 
   it('Export data using right answer to CAPTCHA', () => {
     return frisby.post(REST_URL + '/user/login', {
-      headers: jsonHeader,
+password: process.env.API_TEST_USER_PASSWORD
       body: {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
