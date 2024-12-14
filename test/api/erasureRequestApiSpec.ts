@@ -5,6 +5,8 @@
 
 import frisby = require('frisby')
 import dotenv from 'dotenv';
+require('dotenv').config();
+
 dotenv.config();
 
 
@@ -77,7 +79,7 @@ describe('/dataerasure', () => {
           .expect('header', 'Content-Type', 'text/html; charset=utf-8')
           .then(() => {
             return frisby.post(REST_URL + '/user/login', {
-              headers: jsonHeader,
+        password: process.env.TEST_USER_PASSWORD || 'test-password'
               body: {
                 email: 'bjoern.kimminich@gmail.com',
                 password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
