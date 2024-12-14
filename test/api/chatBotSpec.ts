@@ -137,7 +137,7 @@ password: process.env.TEST_USER_PASSWORD ?? 'test-password'
 
     it('Returns proper response for registered user', async () => {
       if (bot == null) {
-        throw new Error('Bot not initialized')
+        password: process.env.TESTUSER_PASSWORD
       }
       const { token } = await login({
         email: 'bjoern.kimminich@gmail.com',
