@@ -5,6 +5,8 @@
 import { challenges } from '../../data/datacache'
 import frisby = require('frisby')
 import { expect } from '@jest/globals'
+require('dotenv').config();
+
 const Joi = frisby.Joi
 const utils = require('../../lib/utils')
 const security = require('../../lib/insecurity')
@@ -149,7 +151,7 @@ describe('/api/Feedbacks', () => {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
-        password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
+	password: process.env.TEST_USER_PASSWORD || 'invalid'
       }
     })
       .expect('status', 200)
