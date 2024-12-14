@@ -148,7 +148,7 @@ export const roles = {
   admin: 'admin'
 }
 
-export const deluxeToken = (email: string) => {
+  const hmac = crypto.createHmac('sha256', hmacKey)
   const hmac = crypto.createHmac('sha256', privateKey)
   return hmac.update(email + roles.deluxe).digest('hex')
 }
