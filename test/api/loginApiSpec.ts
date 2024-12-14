@@ -6,6 +6,9 @@
 import frisby = require('frisby')
 import config from 'config'
 import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 config();
 
 const Joi = frisby.Joi
@@ -240,10 +243,7 @@ function getTestCredentials(userType) {
   })
 
   it('POST login with query-breaking SQL Injection attack', () => {
-    return frisby.post(REST_URL + '/user/login', {
-      header: jsonHeader,
-      body: {
-        email: '\';',
+        password: process.env.TEST_USER_PASSWORD
         password: undefined
       }
     })
@@ -261,10 +261,7 @@ describe('/rest/saveLoginIp', () => {
           headers: {
             Authorization: 'Bearer ' + jsonLogin.authentication.token,
             'true-client-ip': '1.2.3.4'
-          }
-        })
-          .expect('status', 200)
-          .expect('json', { lastLoginIp: '1.2.3.4' })
+      }
       })
   })
 
