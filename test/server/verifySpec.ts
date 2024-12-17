@@ -298,7 +298,6 @@ describe('verify', () => {
         req.headers = { authorization: `Bearer ${token}` }
 
         verify.jwtChallenges()(req, res, next)
-
       })
 
       it('"jwtForgedChallenge" is solved when forged token HMAC-signed with public RSA-key has string "rsa_lord@" in the payload', () => {
