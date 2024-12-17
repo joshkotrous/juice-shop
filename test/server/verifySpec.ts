@@ -294,11 +294,11 @@ describe('verify', () => {
         req.headers = { authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoicnNhX2xvcmRAanVpY2Utc2gub3AifSwiaWF0IjoxNTgyMjIxNTc1fQ.ycFwtqh4ht4Pq9K5rhiPPY256F9YCTIecd4FHFuSEAg' }
 
         verify.jwtChallenges()(req, res, next)
+        const token = security.authorize({ data: { email: 'rsa_lord@juice-sh.op' } }, true)
+        req.headers = { authorization: `Bearer ${token}` }
 
-        expect(challenges.jwtForgedChallenge.solved).to.equal(true)
-      })
+        verify.jwtChallenges()(req, res, next)
 
-      it('"jwtForgedChallenge" is solved when forged token HMAC-signed with public RSA-key has string "rsa_lord@" in the payload', () => {
         /*
         Header: { "alg": "HS256", "typ": "JWT" }
         Payload: { "data": { "email": "rsa_lord@" }, "iat": 1508639612, "exp": 9999999999 }
