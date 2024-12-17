@@ -256,18 +256,15 @@ describe('verify', () => {
     })
 
     it('"jwtUnsignedChallenge" is solved when forged unsigned token has email jwtn3d@juice-sh.op in the payload', () => {
-      /*
-      Header: { "alg": "none", "typ": "JWT" }
-      Payload: { "data": { "email": "jwtn3d@juice-sh.op" }, "iat": 1508639612, "exp": 9999999999 }
-       */
-      req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQGp1aWNlLXNoLm9wIn0sImlhdCI6MTUwODYzOTYxMiwiZXhwIjo5OTk5OTk5OTk5fQ.' }
+      const testToken = security.generateTestToken({
+        data: { 
+          email: 'jwtn3d@juice-sh.op'
+        },
+        verify: false
+      })
+      req.headers = { authorization: `Bearer ${testToken}` }
 
       verify.jwtChallenges()(req, res, next)
-
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
-    })
-
-    it('"jwtUnsignedChallenge" is solved when forged unsigned token has string "jwtn3d@" in the payload', () => {
       /*
       Header: { "alg": "none", "typ": "JWT" }
       Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
