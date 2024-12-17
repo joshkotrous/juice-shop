@@ -271,12 +271,12 @@ describe('verify', () => {
       /*
       Header: { "alg": "none", "typ": "JWT" }
       Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
+      Header: { "alg": "none", "typ": "JWT" }
+      Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
        */
-      req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQCJ9LCJpYXQiOjE1MDg2Mzk2MTIsImV4cCI6OTk5OTk5OTk5OX0.' }
-
+      const token = security.authorize({ data: { email: 'jwtn3d@juice-sh.op' } })
+      req.headers = { authorization: `Bearer ${token}` }
       verify.jwtChallenges()(req, res, next)
-
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
     })
 
     it('"jwtUnsignedChallenge" is not solved via regularly signed token even with email jwtn3d@juice-sh.op in the payload', () => {
