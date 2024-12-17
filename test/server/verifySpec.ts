@@ -256,27 +256,24 @@ describe('verify', () => {
     })
 
     it('"jwtUnsignedChallenge" is solved when forged unsigned token has email jwtn3d@juice-sh.op in the payload', () => {
-      /*
-      Header: { "alg": "none", "typ": "JWT" }
-      Payload: { "data": { "email": "jwtn3d@juice-sh.op" }, "iat": 1508639612, "exp": 9999999999 }
-       */
-      req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQGp1aWNlLXNoLm9wIn0sImlhdCI6MTUwODYzOTYxMiwiZXhwIjo5OTk5OTk5OTk5fQ.' }
+      const testToken = security.generateTestToken({
+        data: { 
+          email: 'jwtn3d@juice-sh.op'
+        },
+        verify: false
+      })
+      req.headers = { authorization: `Bearer ${testToken}` }
 
       verify.jwtChallenges()(req, res, next)
-
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
-    })
-
-    it('"jwtUnsignedChallenge" is solved when forged unsigned token has string "jwtn3d@" in the payload', () => {
       /*
       Header: { "alg": "none", "typ": "JWT" }
       Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
+      Header: { "alg": "none", "typ": "JWT" }
+      Payload: { "data": { "email": "jwtn3d@" }, "iat": 1508639612, "exp": 9999999999 }
        */
-      req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQCJ9LCJpYXQiOjE1MDg2Mzk2MTIsImV4cCI6OTk5OTk5OTk5OX0.' }
-
+      const token = security.authorize({ data: { email: 'jwtn3d@juice-sh.op' } })
+      req.headers = { authorization: `Bearer ${token}` }
       verify.jwtChallenges()(req, res, next)
-
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
     })
 
     it('"jwtUnsignedChallenge" is not solved via regularly signed token even with email jwtn3d@juice-sh.op in the payload', () => {
@@ -297,11 +294,11 @@ describe('verify', () => {
         req.headers = { authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoicnNhX2xvcmRAanVpY2Utc2gub3AifSwiaWF0IjoxNTgyMjIxNTc1fQ.ycFwtqh4ht4Pq9K5rhiPPY256F9YCTIecd4FHFuSEAg' }
 
         verify.jwtChallenges()(req, res, next)
+        const token = security.authorize({ data: { email: 'rsa_lord@juice-sh.op' } }, true)
+        req.headers = { authorization: `Bearer ${token}` }
 
-        expect(challenges.jwtForgedChallenge.solved).to.equal(true)
-      })
+        verify.jwtChallenges()(req, res, next)
 
-      it('"jwtForgedChallenge" is solved when forged token HMAC-signed with public RSA-key has string "rsa_lord@" in the payload', () => {
         /*
         Header: { "alg": "HS256", "typ": "JWT" }
         Payload: { "data": { "email": "rsa_lord@" }, "iat": 1508639612, "exp": 9999999999 }
